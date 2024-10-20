@@ -1,5 +1,5 @@
 import express, { Router, Response, Request } from "express";
-import { getAllUsers, deleteUser } from "../database/hikesCollection.js";
+import { getAllUsers, deleteUser } from "../database/usersCollection.js";
 import { ObjectId, WithId } from "mongodb";
 import { UserInterface } from "../models/UserInterface.js";
 // import { isValidUser } from "../database/validation.js";
