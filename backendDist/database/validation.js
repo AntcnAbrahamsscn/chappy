@@ -1,4 +1,4 @@
-function isValidHike(fact) {
-    return fact === fact;
+function isValidUser(user) {
+    return user === user;
 }
-export { isValidHike };
+export { isValidUser };
