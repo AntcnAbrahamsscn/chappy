@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 import { router as userRouter } from "./routers/usersRouter.js";
-import { router as messagesRouter } from "./routers/messagesRouter.js";
+import { router as messagesRouter } from "./routers/directMessagesRouter.js";
 
 const app: Express = express();
 const port: number = Number(process.env.PORT || 9872);
