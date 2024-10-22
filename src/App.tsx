@@ -15,7 +15,6 @@ const App = () => {
 
     const handleLogin = async () => {
         const data = { username, password };
-
         const response = await fetch(`api/user/login`, {
             method: "POST",
             headers: {
@@ -52,7 +51,7 @@ const App = () => {
             username: data.user.username,
             gender: data.user.gender,
         });
-        console.log("Current User State:", {
+        console.log("Thi is the  user state:", {
             id: data.user.id,
             username: data.user.username,
             gender: data.user.gender,
