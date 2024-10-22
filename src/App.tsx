@@ -1,35 +1,97 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const LS_KEY = "JWT-TOKEN";
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+const App = () => {
+    const [username, setUsername] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [user, setUser] = useState<{
+        id: string;
+        username: string;
+        gender: string;
+    } | null>(null);
 
-export default App
+    const handleLogin = async () => {
+        const data = { username, password };
+
+        const response = await fetch(`api/user/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        const { jwt } = await response.json();
+        localStorage.setItem(LS_KEY, jwt);
+        setIsLoggedIn(true);
+        fetchUserData();
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem(LS_KEY);
+        setIsLoggedIn(false);
+        setUser(null);
+    };
+
+    const fetchUserData = async () => {
+        const response = await fetch("api/user/protected", {
+            headers: {
+                Authorization: localStorage.getItem(LS_KEY) || "",
+            },
+        });
+
+        const data = await response.json();
+
+        console.log("the data is: " + data);
+
+        setUser({
+            id: data.user.id,
+            username: data.user.username,
+            gender: data.user.gender,
+        });
+        console.log("Current User State:", {
+            id: data.user.id,
+            username: data.user.username,
+            gender: data.user.gender,
+        });
+    };
+
+    return (
+        <div>
+            <h1>Chappy</h1>
+            {!isLoggedIn ? (
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button onClick={handleLogin}>Login</button>
+                </div>
+            ) : (
+                <div>
+                    <button onClick={handleLogout}>Logout</button>
+                    {user && (
+                        <div>
+                            <p>user ID: {user.id}</p>
+                            <p>name: {user.username}</p>
+                            <p>gender: {user.gender}</p>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default App;

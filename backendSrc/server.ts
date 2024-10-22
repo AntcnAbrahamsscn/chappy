@@ -12,6 +12,7 @@ app.use("/", express.json());
 app.use("/api/user", userRouter);
 
 // routes
+// Route handlers
 
 // Start
 app.listen(port, () => {

@@ -8,6 +8,7 @@ app.use("/", express.json());
 // router middleware
 app.use("/api/user", userRouter);
 // routes
+// Route handlers
 // Start
 app.listen(port, () => {
     console.log(`Server is listening on ${port}`);
