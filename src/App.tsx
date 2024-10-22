@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const LS_KEY = "JWT-TOKEN";
 
@@ -12,6 +12,15 @@ const App = () => {
         username: string;
         gender: string;
     } | null>(null);
+
+    // Håller användaren inloggad
+    useEffect(() => {
+        const token = localStorage.getItem(LS_KEY);
+        if (token) {
+            setIsLoggedIn(true);
+            fetchUserData();
+        }
+    }, []);
 
     const handleLogin = async () => {
         const data = { username, password };
