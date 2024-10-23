@@ -1,0 +1,23 @@
+/* Body */
+.body-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 30px;
+}
+
+.content-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 30px;
+    background-color: var(--dark-gray);
+    border-radius: 50px 50px 0 0;
+    flex-grow: 1;
+}

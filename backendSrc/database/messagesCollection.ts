@@ -44,18 +44,4 @@ async function deleteMessage(id: string): Promise<DeleteResult> {
     return result;
 }
 
-// async function userHasMessages(
-//     userId: ObjectId
-// ): Promise<WithId<MessageInterface>[] | null> {
-//     const [col, client]: [Collection<MessageInterface>, MongoClient] =
-//         await connect();
-
-//     // Find messages where 'senderId' is equal to the user's ObjectId
-//     const messages = await col.find({ sender: userId }).toArray();
-
-//     await client.close();
-
-//     return messages.length > 0 ? messages : null; // Return the messages or null if none found
-// }
-
 export { getAllMessages, deleteMessage };

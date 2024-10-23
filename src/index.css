@@ -1,0 +1,31 @@
+/* GLOBAL STYLES */
+
+:root {
+    /* BLUE */
+    --dark-blue: #1b202d;
+    --light-blue: #7a8194;
+    /* GRAY */
+    --dark-gray: #2c2f38;
+    --light-gray: #9da3b0;
+    /* WHITE */
+    --off-white: #d9d9d9;
+    /* GRADIENT */
+    --bg-gradient: linear-gradient(
+        73deg,
+        rgba(22, 19, 74, 1) 14%,
+        rgba(62, 84, 139, 1) 100%
+    );
+}
+
+body {
+    background: rgb(22, 19, 74);
+    background: var(--bg-gradient); /* Correctly applying the gradient */
+    color: var(--off-white);
+    font-family: "Poppins", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
