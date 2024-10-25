@@ -1,0 +1,33 @@
+.dashboard-container {
+    grid-column: span 2;
+}
+
+#user-header {
+    margin-bottom: 4em;
+    font-weight: 200;
+}
+
+.channel-list {
+    margin-top: 2em;
+}
+
+.list-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-preview {
+    color: var(--light-gray);
+    font-size: 0.8em;
+    max-width: 250px;
+}
+
+.dm-container {
+    margin-bottom: 0.8em;
+}
+
+.dm-header-time {
+    display: flex;
+    justify-content: space-between;
+}

@@ -11,21 +11,36 @@
     --off-white: #d9d9d9;
     /* GRADIENT */
     --bg-gradient: linear-gradient(
-        73deg,
-        rgba(22, 19, 74, 1) 14%,
-        rgba(62, 84, 139, 1) 100%
+        141deg,
+        rgba(164, 160, 235, 1) 10%,
+        rgba(144, 28, 69, 1) 100%
     );
 }
 
 body {
-    background: rgb(22, 19, 74);
-    background: var(--bg-gradient); /* Correctly applying the gradient */
+    background: rgb(164, 160, 235);
+    background: var(--bg-gradient);
     color: var(--off-white);
     font-family: "Poppins", sans-serif;
 }
+
+/* background: rgb(164,160,235);
+background: linear-gradient(141deg, rgba(164,160,235,1) 10%, rgba(144,28,69,1) 100%); */
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+/* FONT */
+h2 {
+    font-size: 0.9em;
+}
+
+h3 {
+    font-size: 1em;
+}
+p {
+    font-size: 0.9em;
 }

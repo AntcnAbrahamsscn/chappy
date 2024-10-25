@@ -40,6 +40,11 @@ input {
         color: var(--light-gray);
     }
 }
+input:focus {
+    background-color: transparent;
+    box-shadow: none;
+    border-color: var(--some-color);
+}
 
 button.cta {
     border-radius: 50px;

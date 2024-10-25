@@ -50,23 +50,29 @@ router.post("/login", async (req: Request, res: Response) => {
         return;
     }
 
-    console.log("Body är: ", req.body);
-
-    // See if it matches a user in the database
     const userId = await validateLogin(req.body.username, req.body.password);
-    console.log("user id: ", userId);
-
     if (!userId) {
-        res.status(401);
+        res.status(401).send("Invalid credentials");
         return;
     }
 
-    // Creating the jwt
-    const payload = {
-        userId,
-    };
+    const user = await getUserData(new ObjectId(userId));
+    if (!user) {
+        res.status(404).send("User not found");
+        return;
+    }
+
+    const payload = { userId };
     const token: string = jwt.sign(payload, process.env.SECRET);
-    res.send({ jwt: token });
+
+    res.send({
+        jwt: token,
+        user: {
+            id: user._id.toString(),
+            username: user.username,
+            gender: user.gender,
+        },
+    });
 });
 
 interface Payload {

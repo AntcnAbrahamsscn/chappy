@@ -25,5 +25,14 @@ async function getAllChannels(): Promise<WithId<ChannelInterface>[]> {
     await client.close();
     return result;
 }
+// async function getOpenChannels(): Promise<WithId<ChannelInterface>[]> {
+//     const [col, client]: [Collection<ChannelInterface>, MongoClient] =
+//         await connect();
+//     const result: WithId<ChannelInterface>[] = await col
+//         .find({ isPrivate: false })
+//         .toArray();
+//     await client.close();
+//     return result;
+// }
 
-export { getAllChannels };
+export { getAllChannels /* getOpenChannels */ };

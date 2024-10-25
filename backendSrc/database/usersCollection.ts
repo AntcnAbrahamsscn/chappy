@@ -53,7 +53,6 @@ async function validateLogin(
 
     try {
         const user = await col.findOne<UserInterface>({ username: username });
-        console.log("Found user:", user);
 
         if (user && user.password === password) {
             return user._id.toString();
