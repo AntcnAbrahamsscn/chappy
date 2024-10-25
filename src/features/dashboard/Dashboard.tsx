@@ -4,10 +4,12 @@ import useStore from "../../data/store.js";
 import { ChannelInterface } from "../../models/ChannelInterface.js";
 import { IoLockClosed, IoLockOpenOutline } from "react-icons/io5";
 import { WithId } from "mongodb";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
     const [channels, setChannels] = useState<ChannelInterface[]>([]);
     const { user } = useStore();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchChannels = async () => {
@@ -47,10 +49,21 @@ const Dashboard = () => {
         fetchChannels();
     }, [user]);
 
+    const goToChannel = (channel: WithId<ChannelInterface>) => {
+        if (channel.canAccess) {
+            navigate(`/channel/${channel._id}`);
+        } else {
+            alert("Create an account to get all channels");
+        }
+    };
+
     return (
         <div className="dashboard-container">
             <h2 id="user-header">
-                Signed in as <strong>{user?.username || "Guest"}</strong>
+                Signed in as{" "}
+                <strong className="gradient-text">
+                    {user?.username || "Guest"}
+                </strong>
             </h2>
             {user && (
                 <div>
@@ -91,6 +104,7 @@ const Dashboard = () => {
                 {channels.length > 0 ? (
                     channels.map((channel) => (
                         <p
+                            onClick={() => goToChannel(channel)}
                             className="list-container"
                             key={channel._id.toString()}
                         >

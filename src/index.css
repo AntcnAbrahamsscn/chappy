@@ -12,7 +12,7 @@
     /* GRADIENT */
     --bg-gradient: linear-gradient(
         141deg,
-        rgba(164, 160, 235, 1) 10%,
+        rgb(164, 160, 235) 10%,
         rgba(144, 28, 69, 1) 100%
     );
 }

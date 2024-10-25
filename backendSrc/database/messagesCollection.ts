@@ -44,4 +44,16 @@ async function deleteMessage(id: string): Promise<DeleteResult> {
     return result;
 }
 
-export { getAllMessages, deleteMessage };
+export { getAllMessages, deleteMessage, getChannelMessages };
+
+// Get all Messages
+async function getChannelMessages(
+    channelId: string
+): Promise<WithId<MessageInterface>[]> {
+    const [col, client] = await connect();
+    const result: WithId<MessageInterface>[] = await col
+        .find({ channel: channelId })
+        .toArray();
+    await client.close();
+    return result;
+}

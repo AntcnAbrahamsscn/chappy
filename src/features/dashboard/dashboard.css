@@ -15,6 +15,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 0.3em;
 }
 
 .message-preview {
@@ -30,4 +31,10 @@
 .dm-header-time {
     display: flex;
     justify-content: space-between;
+}
+
+.gradient-text {
+    background: -webkit-linear-gradient(rgb(214, 213, 237), rgb(148, 145, 196));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

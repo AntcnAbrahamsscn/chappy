@@ -2,10 +2,9 @@ import { ObjectId } from "mongodb";
 
 export interface MessageInterface {
     _id: ObjectId;
-    senderId: ObjectId;
+    sender: string;
     content: string;
-    gender: string;
-    channel: ObjectId | null;
-    directTo: ObjectId | null;
-    timeSent: Date;
+    channel: string | null;
+    directTo: string | null;
+    sentAt: Date;
 }
