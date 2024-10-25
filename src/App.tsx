@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// App.tsx
+// import React from "react";
+import {
+    BrowserRouter as Router,
+    Route,
+    Routes,
+    Navigate,
+} from "react-router-dom";
+import Login from "./features/login/Login.js";
+import Dashboard from "./features/dashboard/Dashboard.js";
+import useStore from "./data/store.js";
+import "./App.css";
+import Logout from "./features/logout/Logout.js";
+import Channel from "./features/channel/Channel.js";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+    const { isLoggedIn } = useStore();
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    return (
+        <Router>
+            <div className="body-container">
+                <div className="header-container">
+                    <img src="./chappy-logo.svg" alt="Chappy logo" />
+                    {/* RENDERAR LOGOUT ENBART OM MAN ÄR INLOGGAD */}
+                    {isLoggedIn && <Logout />}{" "}
+                </div>
+                <div className="content-container">
+                    <Routes>
+                        <Route path="/" element={<Login />} />
+                        <Route
+                            path="/dashboard"
+                            element={
+                                isLoggedIn ? <Dashboard /> : <Navigate to="/" />
+                            }
+                        />
 
-export default App
+                        <Route path="/channel/:id" element={<Channel />} />
+                    </Routes>
+                </div>
+            </div>
+        </Router>
+    );
+};
+
+export default App;

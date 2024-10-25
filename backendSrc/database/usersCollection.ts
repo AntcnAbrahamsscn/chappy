@@ -24,24 +24,19 @@ async function connect(): Promise<[Collection<UserInterface>, MongoClient]> {
     return [col, client];
 }
 
-// Get  all
-
+// Get all users
 async function getAllUsers(): Promise<WithId<UserInterface>[]> {
     const [col, client]: [Collection<UserInterface>, MongoClient] =
         await connect();
-
     const result: WithId<UserInterface>[] = await col.find({}).toArray();
     await client.close();
     return result;
 }
 
-// Update
-
-// Delete
+// Delete user
 async function deleteUser(id: string): Promise<DeleteResult> {
     const [col, client]: [Collection<UserInterface>, MongoClient] =
         await connect();
-
     const result: DeleteResult = await col.deleteOne({
         _id: new ObjectId(id),
     });
@@ -49,4 +44,38 @@ async function deleteUser(id: string): Promise<DeleteResult> {
     return result;
 }
 
-export { getAllUsers, deleteUser };
+// Validate user to see if it matches user in db
+async function validateLogin(
+    username: string,
+    password: string
+): Promise<string | null> {
+    const [col, client] = await connect();
+
+    try {
+        const user = await col.findOne<UserInterface>({ username: username });
+
+        if (user && user.password === password) {
+            return user._id.toString();
+        }
+
+        return null;
+    } finally {
+        await client.close();
+    }
+}
+
+// Getting the user data
+async function getUserData(userId: ObjectId): Promise<UserInterface | null> {
+    const [col, client]: [Collection<UserInterface>, MongoClient] =
+        await connect();
+
+    const user = await col.findOne<WithId<UserInterface>>({
+        _id: userId,
+    });
+
+    await client.close();
+
+    return user || null;
+}
+
+export { getAllUsers, deleteUser, validateLogin, getUserData };

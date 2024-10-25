@@ -24,17 +24,25 @@ async function connect(): Promise<[Collection<MessageInterface>, MongoClient]> {
     return [col, client];
 }
 
+<<<<<<< HEAD
 // Get  all
 
 async function getAllMessages(): Promise<WithId<MessageInterface>[]> {
     const [col, client]: [Collection<MessageInterface>, MongoClient] =
         await connect();
 
+=======
+// Get all Messages
+async function getAllMessages(): Promise<WithId<MessageInterface>[]> {
+    const [col, client]: [Collection<MessageInterface>, MongoClient] =
+        await connect();
+>>>>>>> dev
     const result: WithId<MessageInterface>[] = await col.find({}).toArray();
     await client.close();
     return result;
 }
 
+<<<<<<< HEAD
 // Update
 
 // Delete
@@ -42,6 +50,12 @@ async function deleteMessage(id: string): Promise<DeleteResult> {
     const [col, client]: [Collection<MessageInterface>, MongoClient] =
         await connect();
 
+=======
+// Delete Message
+async function deleteMessage(id: string): Promise<DeleteResult> {
+    const [col, client]: [Collection<MessageInterface>, MongoClient] =
+        await connect();
+>>>>>>> dev
     const result: DeleteResult = await col.deleteOne({
         _id: new ObjectId(id),
     });
@@ -49,4 +63,20 @@ async function deleteMessage(id: string): Promise<DeleteResult> {
     return result;
 }
 
+<<<<<<< HEAD
 export { getAllMessages, deleteMessage };
+=======
+export { getAllMessages, deleteMessage, getChannelMessages };
+
+// Get all Messages
+async function getChannelMessages(
+    channelId: string
+): Promise<WithId<MessageInterface>[]> {
+    const [col, client] = await connect();
+    const result: WithId<MessageInterface>[] = await col
+        .find({ channel: channelId })
+        .toArray();
+    await client.close();
+    return result;
+}
+>>>>>>> dev
