@@ -3,6 +3,7 @@
 :root {
     /* BLUE */
     --dark-blue: #1b202d;
+    --medium-blue: #24272f;
     --light-blue: #7a8194;
     /* GRAY */
     --dark-gray: #2c2f38;
@@ -15,11 +16,13 @@
         rgb(164, 160, 235) 10%,
         rgba(144, 28, 69, 1) 100%
     );
+    --bg-gradient-bg: rgb(164, 160, 235);
 }
 
 body {
-    background: rgb(164, 160, 235);
-    background: var(--bg-gradient);
+    /* background: var(--bg-gradient-bg);
+    background: var(--bg-gradient); */
+    background-color: var(--dark-blue);
     color: var(--off-white);
     font-family: "Poppins", sans-serif;
 }

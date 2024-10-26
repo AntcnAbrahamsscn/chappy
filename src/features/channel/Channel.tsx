@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useStore from "../../data/store.js";
+import "./channel.css";
 
 import { MessageInterface } from "../../models/MessageInterface";
 
 const Channel = () => {
     const { id } = useParams<{ id: string }>();
+    const { user } = useStore();
+
+    // TODO: Lägg till i zustand
     const [messages, setMessages] = useState<MessageInterface[]>([]);
 
     useEffect(() => {
@@ -30,19 +35,37 @@ const Channel = () => {
     }, [id]);
 
     return (
-        <div>
+        <div className="channel-container">
             {/* TODO: Gör ett API anrop som hämtar namnet på kanalen! */}
-            <h2>Name: </h2>
+            <h2> </h2>
             <div>
-                {messages.map((msg) => (
-                    <div>
-                        <p>
-                            <strong>{msg.sender}:</strong> {msg.content}{" "}
+                {messages.map((msg, index) => (
+                    <div
+                        key={index}
+                        className={`message-section ${
+                            user?.username === msg.sender
+                                ? "own-message"
+                                : "other-message"
+                        }`}
+                    >
+                        <p
+                            className={
+                                user?.username === msg.sender
+                                    ? "user-message-container"
+                                    : "message-container"
+                            }
+                        >
+                            {msg.content}
+                            <div className="message-details">
+                                <p>{msg.sender}</p>
+                                <p>{new Date(msg.sentAt).toLocaleString()} </p>
+                            </div>
                         </p>
-                        <p>Sent at: {new Date(msg.sentAt).toLocaleString()} </p>
                     </div>
                 ))}
             </div>
+            <input type="text" />
+            <button>Send</button>
         </div>
     );
 };

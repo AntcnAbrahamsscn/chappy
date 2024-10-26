@@ -7,6 +7,7 @@ import { WithId } from "mongodb";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+    // TODO: Lägg till detta i zustand
     const [channels, setChannels] = useState<ChannelInterface[]>([]);
     const { user } = useStore();
     const navigate = useNavigate();
