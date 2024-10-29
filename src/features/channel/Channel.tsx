@@ -4,6 +4,7 @@ import useStore from "../../data/store.js";
 import "./channel.css";
 
 import { MessageInterface } from "../../models/MessageInterface";
+import { CiLocationArrow1 } from "react-icons/ci";
 
 const Channel = () => {
     const { id } = useParams<{ id: string }>();
@@ -37,8 +38,7 @@ const Channel = () => {
     return (
         <div className="channel-container">
             {/* TODO: Gör ett API anrop som hämtar namnet på kanalen! */}
-            <h2> </h2>
-            <div>
+            <div className="messages-container">
                 {messages.map((msg, index) => (
                     <div
                         key={index}
@@ -64,8 +64,13 @@ const Channel = () => {
                     </div>
                 ))}
             </div>
-            <input type="text" />
-            <button>Send</button>
+            {/* TODO: Lägg till inputfield */}
+            <div className="input-container">
+                <input type="text" placeholder="Type something fun!" />
+                <button>
+                    <CiLocationArrow1 size={20} />
+                </button>
+            </div>
         </div>
     );
 };

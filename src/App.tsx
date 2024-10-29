@@ -16,12 +16,13 @@ import Channel from "./features/channel/Channel.js";
 const App = () => {
     const { isLoggedIn } = useStore();
 
+    // För att ändra bakgrund beroende på vart man är
+
     return (
         <Router>
             <div className="body-container">
                 <div className="header-container">
-                    <img src="./chappy-logo.svg" alt="Chappy logo" />
-                    {/* RENDERAR LOGOUT ENBART OM MAN ÄR INLOGGAD */}
+                    <img src="/chappy-logo.svg" alt="Chappy logo" />
                     {isLoggedIn && <Logout />}{" "}
                 </div>
                 <div className="content-container">
@@ -33,8 +34,12 @@ const App = () => {
                                 isLoggedIn ? <Dashboard /> : <Navigate to="/" />
                             }
                         />
-
-                        <Route path="/channel/:id" element={<Channel />} />
+                        <Route
+                            path="/dashboard/:id"
+                            element={
+                                isLoggedIn ? <Channel /> : <Navigate to="/" />
+                            }
+                        />
                     </Routes>
                 </div>
             </div>

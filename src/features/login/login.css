@@ -9,7 +9,7 @@
     height: 100%;
 }
 
-.input-container {
+.login-container {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -57,7 +57,7 @@ button.cta {
 
 button {
     border-radius: 50px;
-    background-color: var(--dark-gray);
+    background-color: var(--dark-blue);
     color: var(--off-white);
     box-shadow: none;
     border: 1px solid var(--off-white);

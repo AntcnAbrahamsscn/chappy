@@ -52,7 +52,7 @@ const Dashboard = () => {
 
     const goToChannel = (channel: WithId<ChannelInterface>) => {
         if (channel.canAccess) {
-            navigate(`/channel/${channel._id}`);
+            navigate(`/dashboard/${channel._id}`);
         } else {
             alert("Create an account to get all channels");
         }
@@ -101,7 +101,7 @@ const Dashboard = () => {
             )}
 
             <ul className="channel-list">
-                <h3>{user ? "Your channels" : "Open channels"}</h3>
+                <h3>Channels</h3>
                 {channels.length > 0 ? (
                     channels.map((channel) => (
                         <p

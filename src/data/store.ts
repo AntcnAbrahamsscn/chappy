@@ -1,19 +1,19 @@
 import { create } from "zustand";
+import { UserInterface } from "../models/UserInterface";
 
-interface User {
-    id: string;
-    username: string;
-    gender: string;
-}
+// interface User {
+//     id: string;
+//     username: string;
+//     gender: string;
+// }
 
 interface Store {
     isLoggedIn: boolean;
-    user: User | null;
-    setUser: (user: User | null) => void;
-    login: (token: string, user: User) => void;
-    loginAsGuest: () => void; // Add this line
+    user: UserInterface | null;
+    setUser: (user: UserInterface | null) => void;
+    login: (token: string, user: UserInterface) => void;
+    loginAsGuest: () => void;
     logout: () => void;
-    // restoreSession: () => void;
 }
 
 const LS_KEY = "JWT-TOKEN";

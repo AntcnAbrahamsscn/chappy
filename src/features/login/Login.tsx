@@ -49,7 +49,7 @@ const Login = () => {
         <div className="login-container">
             {!isLoggedIn && (
                 <div className="login-form">
-                    <div className="input-container">
+                    <div className="login-container">
                         <input
                             type="text"
                             placeholder="Username"
