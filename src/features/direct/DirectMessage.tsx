@@ -30,7 +30,6 @@ const DirectMessage = () => {
                 console.log(data);
                 setMessages(data.messages);
                 console.log(messages);
-                
             } catch (error) {
                 console.error("Error fetching messages:", error);
             }
@@ -41,19 +40,38 @@ const DirectMessage = () => {
 
     return (
         <div className="channel-container">
+            <p className="direct-message-header">
+                Conversation with {receiver}
+            </p>
             <div className="messages-display">
                 {user && messages.length > 0 ? (
-                    messages.map((message, index) => (
+                    messages.map((msg, index) => (
                         <div
                             key={index}
-                            
+                            className={`message-section ${
+                                user?.username === msg.sender
+                                    ? "own-message"
+                                    : "other-message"
+                            }`}
                         >
-                            <p>{message.content}</p>
-                            
+                            <p
+                                className={
+                                    user?.username === msg.sender
+                                        ? "user-message-container"
+                                        : "message-container"
+                                }
+                            >
+                                {msg.content}
+                                <div className="message-details">
+                                    <p>
+                                        {new Date(msg.sentAt).toLocaleString()}{" "}
+                                    </p>
+                                </div>
+                            </p>
                         </div>
                     ))
                 ) : (
-                    <p>No messages available.</p> 
+                    <p>No messages available.</p>
                 )}
             </div>
             <ChatInputField />

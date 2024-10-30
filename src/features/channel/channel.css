@@ -56,6 +56,10 @@
     padding-top: 50px;
 }
 
+.direct-message-header {
+    margin-bottom: 50px;
+}
+
 .input-container {
     display: flex;
     align-items: center;

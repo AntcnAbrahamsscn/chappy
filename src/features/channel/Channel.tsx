@@ -66,8 +66,6 @@ const Channel = () => {
             </div>
             {/* TODO: Lägg till inputfield */}
             <ChatInputField />
-
-        
         </div>
     );
 };

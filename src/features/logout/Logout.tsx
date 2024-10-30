@@ -7,7 +7,10 @@ const Logout = () => {
     const location = useLocation();
 
     const handleLogout = () => {
-        if (location.pathname.startsWith("/channel") || location.pathname.startsWith("/message")) {
+        if (
+            location.pathname.startsWith("/channel") ||
+            location.pathname.startsWith("/message")
+        ) {
             navigate("/dashboard");
         } else {
             logout();
@@ -17,7 +20,8 @@ const Logout = () => {
 
     return (
         <div className="logout-button" onClick={handleLogout}>
-            {location.pathname.startsWith("/channel") ? (
+            {location.pathname.startsWith("/channel") ||
+            location.pathname.startsWith("/message") ? (
                 <p> Go Back </p>
             ) : (
                 <p> Sign Out</p>

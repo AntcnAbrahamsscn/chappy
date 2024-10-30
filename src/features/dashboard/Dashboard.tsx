@@ -72,8 +72,12 @@ const Dashboard = () => {
                 }
 
                 const data = await response.json();
-
-                setUsersList(data);
+                const filteredUsers = user
+                    ? data.filter(
+                          (u: UserInterface) => u.username !== user.username
+                      )
+                    : data;
+                setUsersList(filteredUsers);
             } catch (error) {
                 console.error("Error fetching channels", error);
             }
@@ -112,7 +116,7 @@ const Dashboard = () => {
                                     className="list-container"
                                     onClick={() =>
                                         goToDirectMessage(user.username)
-                                    } // Use username here
+                                    }
                                     key={user._id.toString()}
                                 >
                                     {user.username}
