@@ -23,7 +23,7 @@
 body {
     /* background: var(--bg-gradient-bg);
     background: var(--bg-gradient); */
-    background-color: var(--dark-blue);
+    background-color: var(--darkest-blue);
     color: var(--off-white);
     font-family: "Poppins", sans-serif;
 }

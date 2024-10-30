@@ -5,10 +5,12 @@ import { ChannelInterface } from "../../models/ChannelInterface.js";
 import { IoLockClosed, IoLockOpenOutline } from "react-icons/io5";
 import { WithId } from "mongodb";
 import { useNavigate } from "react-router-dom";
+import { UserInterface } from "../../models/UserInterface.js";
 
 const Dashboard = () => {
     // TODO: Lägg till detta i zustand
     const [channels, setChannels] = useState<ChannelInterface[]>([]);
+    const [usersList, setUsersList] = useState<UserInterface[]>([]);
     const { user } = useStore();
     const navigate = useNavigate();
 
@@ -50,9 +52,43 @@ const Dashboard = () => {
         fetchChannels();
     }, [user]);
 
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const token = localStorage.getItem("JWT-TOKEN");
+
+            try {
+                const options = {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: user ? `Bearer ${token}` : "",
+                    },
+                };
+
+                const response = await fetch("/api/user", options);
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch channels");
+                }
+
+                const data = await response.json();
+
+                setUsersList(data);
+            } catch (error) {
+                console.error("Error fetching channels", error);
+            }
+        };
+
+        fetchUsers();
+    }, [user]);
+
+    const goToDirectMessage = (username: string) => {
+        navigate(`/message/${username}`);
+    };
+
     const goToChannel = (channel: WithId<ChannelInterface>) => {
         if (channel.canAccess) {
-            navigate(`/dashboard/${channel._id}`);
+            navigate(`/channel/${channel._id}`);
         } else {
             alert("Create an account to get all channels");
         }
@@ -70,32 +106,21 @@ const Dashboard = () => {
                 <div>
                     <h3>Private Messages</h3>
                     <div className="dm-container">
-                        <div className="dm-header-time">
-                            <p>Johanna Kassler</p>
-                            <p className="message-preview">08:13</p>
-                        </div>
-                        <p className="message-preview">
-                            Hello! Wanna eat food someday soon?
-                        </p>
-                    </div>
-                    <div className="dm-container">
-                        <div className="dm-header-time">
-                            <p>Frank Burger</p>
-                            <p className="message-preview">Tue</p>
-                        </div>
-                        <p className="message-preview">
-                            Have you heard about the burger place around the
-                            corner?
-                        </p>
-                    </div>
-                    <div className="dm-container">
-                        <div className="dm-header-time">
-                            <p>Dejan Calzone</p>
-                            <p className="message-preview">Sun</p>
-                        </div>
-                        <p className="message-preview">
-                            Whats your favorite pizza?
-                        </p>
+                        {usersList.length > 0 ? (
+                            usersList.map((user) => (
+                                <p
+                                    className="list-container"
+                                    onClick={() =>
+                                        goToDirectMessage(user.username)
+                                    } // Use username here
+                                    key={user._id.toString()}
+                                >
+                                    {user.username}
+                                </p>
+                            ))
+                        ) : (
+                            <p>No users available for messaging</p>
+                        )}
                     </div>
                 </div>
             )}

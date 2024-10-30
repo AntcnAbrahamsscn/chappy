@@ -7,7 +7,7 @@ const Logout = () => {
     const location = useLocation();
 
     const handleLogout = () => {
-        if (location.pathname.startsWith("/channel")) {
+        if (location.pathname.startsWith("/channel") || location.pathname.startsWith("/message")) {
             navigate("/dashboard");
         } else {
             logout();

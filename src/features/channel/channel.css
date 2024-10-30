@@ -59,28 +59,29 @@
 .input-container {
     display: flex;
     align-items: center;
-    /* flex-grow: 1; */
-    /* TODO: FIXA SÅ DEN FYLLER PERFEKT */
-    width: 85%;
     gap: 10px;
-    /* position: relative; */
-    /* padding: 10px; */
+    /* padding: 30px; */
     position: fixed;
-    bottom: 20px;
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
-    box-sizing: border-box;
+    max-width: 500px; /* Optional if you want to limit width */
+    margin: 0 auto; /* Center within parent container */
+    /* background-color: var(--darkest-blue); */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .input-container input {
     flex: 1;
-    padding: 20px;
-    border-radius: 20px;
-    /* border: 1px solid var(--light-gray); */
+    padding: 30px 30px;
+    /* border-radius: 10px; */
     border: none;
     background-color: var(--darkest-blue);
-    width: 100%;
     color: var(--light-gray);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    position: relative;
+    /* border: 1px solid var(--light-gray); */
 }
 
 .input-container button {
@@ -88,20 +89,13 @@
     align-items: center;
     justify-content: center;
     width: 40px;
+    position: absolute;
     height: 40px;
     border-radius: 50%;
-    /* background-color: #ff3cac;
-    background-image: linear-gradient(
-        225deg,
-        #ff3cac 0%,
-        #784ba0 50%,
-        #2b86c5 100%
-    ); */
     color: var(--off-white);
     border: none;
+    right: 30px;
     cursor: pointer;
     background-color: var(--darkest-blue);
-
-    position: absolute;
-    right: 10px;
+    margin-left: 10px; /* Spacing from the input field */
 }

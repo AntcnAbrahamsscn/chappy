@@ -44,7 +44,24 @@ async function deleteMessage(id: string): Promise<DeleteResult> {
     return result;
 }
 
-export { getAllMessages, deleteMessage, getChannelMessages };
+async function getConversation(
+    user1: string,
+    user2: string
+): Promise<WithId<MessageInterface>[]> {
+    const [col, client] = await connect();
+    const result: WithId<MessageInterface>[] = await col
+        .find({
+            $or: [
+                { sender: user1, directTo: user2 },
+                { sender: user2, directTo: user1 }
+            ]
+        })
+        .toArray();
+    await client.close();
+    return result;
+}
+
+export { getAllMessages, deleteMessage, getChannelMessages, getConversation };
 
 // Get all Messages
 async function getChannelMessages(

@@ -12,6 +12,7 @@ import useStore from "./data/store.js";
 import "./App.css";
 import Logout from "./features/logout/Logout.js";
 import Channel from "./features/channel/Channel.js";
+import DirectMessage from "./features/direct/DirectMessage.js";
 
 const App = () => {
     const { isLoggedIn } = useStore();
@@ -35,9 +36,15 @@ const App = () => {
                             }
                         />
                         <Route
-                            path="/dashboard/:id"
+                            path="/channel/:id"
                             element={
                                 isLoggedIn ? <Channel /> : <Navigate to="/" />
+                            }
+                        />
+                        <Route
+                            path="/message/:receiver"
+                            element={
+                                isLoggedIn ? <DirectMessage /> : <Navigate to="/" />
                             }
                         />
                     </Routes>

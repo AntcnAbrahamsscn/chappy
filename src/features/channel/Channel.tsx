@@ -4,7 +4,7 @@ import useStore from "../../data/store.js";
 import "./channel.css";
 
 import { MessageInterface } from "../../models/MessageInterface";
-import { CiLocationArrow1 } from "react-icons/ci";
+import ChatInputField from "./ChatInputField.js";
 
 const Channel = () => {
     const { id } = useParams<{ id: string }>();
@@ -65,12 +65,9 @@ const Channel = () => {
                 ))}
             </div>
             {/* TODO: Lägg till inputfield */}
-            <div className="input-container">
-                <input type="text" placeholder="Type something fun!" />
-                <button>
-                    <CiLocationArrow1 size={20} />
-                </button>
-            </div>
+            <ChatInputField />
+
+        
         </div>
     );
 };

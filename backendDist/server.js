@@ -12,7 +12,6 @@ app.use("/api/user", userRouter);
 app.use("/api/channel", channelRouter);
 app.use("/api/message", messageRouter);
 // routes
-// Route handlers
 // Start
 app.listen(port, () => {
     console.log(`Server is listening on ${port}`);
