@@ -108,8 +108,8 @@ const Dashboard = () => {
             </h2>
             {user && (
                 <div>
-                    <h3>Private Messages</h3>
                     <div className="dm-container">
+                    <h3>Private Messages</h3>
                         {usersList.length > 0 ? (
                             usersList.map((user) => (
                                 <p

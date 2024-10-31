@@ -1,5 +1,5 @@
 
-import "./channel.css";
+import "./chat-styles.css";
 
 import { CiLocationArrow1 } from "react-icons/ci";
 

@@ -1,24 +1,9 @@
 import { create } from "zustand";
-import { UserInterface } from "../models/UserInterface";
-
-// interface User {
-//     id: string;
-//     username: string;
-//     gender: string;
-// }
-
-interface Store {
-    isLoggedIn: boolean;
-    user: UserInterface | null;
-    setUser: (user: UserInterface | null) => void;
-    login: (token: string, user: UserInterface) => void;
-    loginAsGuest: () => void;
-    logout: () => void;
-}
+import { StoreInterface } from "../models/StoreInterface";
 
 const LS_KEY = "JWT-TOKEN";
 
-const useStore = create<Store>((set) => ({
+const useStore = create<StoreInterface>((set) => ({
     isLoggedIn: false,
     user: null,
     setUser: (user) => set({ user }),

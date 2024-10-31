@@ -1,4 +1,4 @@
-import { MongoClient, Db, Collection, WithId } from "mongodb";
+import { MongoClient, Db, Collection, WithId, ObjectId } from "mongodb";
 import { ChannelInterface } from "../models/ChannelInterface.js";
 
 const con: string | undefined = process.env.CONNECTION_STRING;
@@ -25,14 +25,13 @@ async function getAllChannels(): Promise<WithId<ChannelInterface>[]> {
     await client.close();
     return result;
 }
-// async function getOpenChannels(): Promise<WithId<ChannelInterface>[]> {
-//     const [col, client]: [Collection<ChannelInterface>, MongoClient] =
-//         await connect();
-//     const result: WithId<ChannelInterface>[] = await col
-//         .find({ isPrivate: false })
-//         .toArray();
-//     await client.close();
-//     return result;
-// }
 
-export { getAllChannels /* getOpenChannels */ };
+// Get one channel
+async function getChannelName(channelId: string): Promise<WithId<ChannelInterface> | null> {
+    const [col, client]: [Collection<ChannelInterface>, MongoClient] = await connect();
+    const result: WithId<ChannelInterface> | null = await col.findOne({ _id: new ObjectId(channelId) });
+    await client.close();
+    return result;
+}
+
+export { getAllChannels /* getOpenChannels */, getChannelName };

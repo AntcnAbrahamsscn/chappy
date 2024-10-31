@@ -1,6 +1,7 @@
 import express, { Router, Response, Request } from "express";
 import {
     getAllChannels,
+    getChannelName,
     // getOpenChannels,
 } from "../database/channelCollection.js";
 import { WithId } from "mongodb";
@@ -43,6 +44,27 @@ router.get("/", async (req: Request, res: Response) => {
         res.sendStatus(500);
     }
 });
+
+
+// 
+router.get("/:id", async (req: Request, res: Response) => {
+    const channelId: string = req.params.id;
+
+    try {
+        const channel: WithId<ChannelInterface> | null = await getChannelName(channelId);
+
+        if (channel) {
+            res.json(channel);
+        } else {
+            res.status(404)
+        }
+    } catch (error) {
+        console.error("Error fetching channel:", error);
+        res.status(500)
+    }
+});
+
+
 
 //  TODO: EN get utan JWT som enbart hämtar channels: isPrivate: False!
 // router.get("/open", async (_, res: Response) => {

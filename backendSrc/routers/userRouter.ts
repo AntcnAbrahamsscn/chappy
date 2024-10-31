@@ -7,6 +7,7 @@ import {
 } from "../database/usersCollection.js";
 import { ObjectId, WithId } from "mongodb";
 import { UserInterface } from "../models/UserInterface.js";
+import { Payload } from "../models/PayloadInterface.js";
 import jwt from "jsonwebtoken";
 
 const router: Router = express.Router();
@@ -75,10 +76,7 @@ router.post("/login", async (req: Request, res: Response) => {
     });
 });
 
-interface Payload {
-    userId: string;
-    iat: number;
-}
+
 router.get("/protected", async (req: Request, res: Response) => {
     if (!process.env.SECRET) {
         res.sendStatus(500);

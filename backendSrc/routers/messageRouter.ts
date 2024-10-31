@@ -7,9 +7,7 @@ const router: Router = express.Router();
 
 
 router.get("/:id", async (req: Request, res: Response) => {
-    const channelId: string = req.params.id;
-    // console.log(channelId);
-    
+    const channelId: string = req.params.id;    
 
     try {
         const messages: WithId<MessageInterface>[] = await getChannelMessages(
@@ -22,13 +20,12 @@ router.get("/:id", async (req: Request, res: Response) => {
         res.status(500)
     }
 });
+
 // GET CONVERSATION
 router.get("/direct/:user1/:user2", async (req: Request, res: Response) => {
     const user1 = req.params.user1;  
     const user2 = req.params.user2;
     // console.log(user1, user2);
-    
-    
 
     if (!user1 || !user2) {
         res.status(400).send("Both user1 and user2 must be provided");

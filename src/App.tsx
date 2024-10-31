@@ -11,8 +11,8 @@ import Dashboard from "./features/dashboard/Dashboard.js";
 import useStore from "./data/store.js";
 import "./App.css";
 import Logout from "./features/logout/Logout.js";
-import Channel from "./features/channel/Channel.js";
-import DirectMessage from "./features/direct/DirectMessage.js";
+import Channel from "./features/chat-rooms/ChannelRoom.js";
+import DirectMessage from "./features/chat-rooms/DirectMessageRoom.js";
 
 const App = () => {
     const { isLoggedIn } = useStore();
@@ -21,9 +21,10 @@ const App = () => {
 
     return (
         <Router>
+            {/* TODO: Lägg till en Root med outlet istället. */}
             <div className="body-container">
                 <div className="header-container">
-                    <img src="/chappy-logo.svg" alt="Chappy logo" />
+                    <img src="/chappy-logo-3.svg" alt="Chappy logo" />
                     {isLoggedIn && <Logout />}{" "}
                 </div>
                 <div className="content-container">

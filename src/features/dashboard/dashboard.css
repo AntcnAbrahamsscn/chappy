@@ -1,5 +1,8 @@
 .dashboard-container {
     grid-column: span 2;
+    /* box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+        rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    border-radius: 10px; */
 }
 
 #user-header {
@@ -34,12 +37,7 @@
 }
 
 .gradient-text {
-    background: -webkit-linear-gradient(
-        225deg,
-        #ff3cac 0%,
-        #784ba0 50%,
-        #2b86c5 100%
-    );
+    background: -webkit-linear-gradient(225deg, #784ba0 0%, #2b86c5 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
