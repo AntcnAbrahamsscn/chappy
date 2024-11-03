@@ -45,7 +45,11 @@ const App = () => {
                         <Route
                             path="/message/:receiver"
                             element={
-                                isLoggedIn ? <DirectMessage /> : <Navigate to="/" />
+                                isLoggedIn ? (
+                                    <DirectMessage />
+                                ) : (
+                                    <Navigate to="/" />
+                                )
                             }
                         />
                     </Routes>

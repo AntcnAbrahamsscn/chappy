@@ -76,7 +76,6 @@ router.post("/login", async (req: Request, res: Response) => {
     });
 });
 
-
 router.get("/protected", async (req: Request, res: Response) => {
     if (!process.env.SECRET) {
         res.sendStatus(500);

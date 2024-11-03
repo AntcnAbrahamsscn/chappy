@@ -45,26 +45,25 @@ router.get("/", async (req: Request, res: Response) => {
     }
 });
 
-
-// 
+//
 router.get("/:id", async (req: Request, res: Response) => {
     const channelId: string = req.params.id;
 
     try {
-        const channel: WithId<ChannelInterface> | null = await getChannelName(channelId);
+        const channel: WithId<ChannelInterface> | null = await getChannelName(
+            channelId
+        );
 
         if (channel) {
             res.json(channel);
         } else {
-            res.status(404)
+            res.status(404);
         }
     } catch (error) {
         console.error("Error fetching channel:", error);
-        res.status(500)
+        res.status(500);
     }
 });
-
-
 
 //  TODO: EN get utan JWT som enbart hämtar channels: isPrivate: False!
 // router.get("/open", async (_, res: Response) => {
