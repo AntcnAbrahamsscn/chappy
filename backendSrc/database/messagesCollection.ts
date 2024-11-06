@@ -5,6 +5,7 @@ import {
     WithId,
     ObjectId,
     DeleteResult,
+    InsertOneResult,
 } from "mongodb";
 import { MessageInterface } from "../models/MessageInterface.js";
 
@@ -17,11 +18,15 @@ async function connect(): Promise<[Collection<MessageInterface>, MongoClient]> {
         throw new Error("No connection string");
     }
 
-    const client: MongoClient = await MongoClient.connect(con);
-    const db: Db = await client.db("Chappy-the-chat-bot");
-    const col: Collection<MessageInterface> =
-        db.collection<MessageInterface>("Messages");
-    return [col, client];
+    try {
+        const client: MongoClient = await MongoClient.connect(con);
+        const db: Db = client.db("Chappy-the-chat-bot");
+        const col: Collection<MessageInterface> = db.collection("Messages");
+        return [col, client];
+    } catch (error) {
+        console.error("Failed to connect to MongoDB:", error);
+        throw error;
+    }
 }
 
 // Get all Messages
@@ -53,15 +58,21 @@ async function getConversation(
         .find({
             $or: [
                 { sender: user1, directTo: user2 },
-                { sender: user2, directTo: user1 }
-            ]
+                { sender: user2, directTo: user1 },
+            ],
         })
         .toArray();
     await client.close();
     return result;
 }
 
-export { getAllMessages, deleteMessage, getChannelMessages, getConversation };
+export {
+    getAllMessages,
+    deleteMessage,
+    getChannelMessages,
+    getConversation,
+    addMessage,
+};
 
 // Get all Messages
 async function getChannelMessages(
@@ -73,4 +84,20 @@ async function getChannelMessages(
         .toArray();
     await client.close();
     return result;
+}
+
+async function addMessage(
+    newMessage: MessageInterface
+): Promise<ObjectId | null> {
+    const [col, client] = await connect();
+
+    const result: InsertOneResult<MessageInterface | null> =
+        await col.insertOne(newMessage);
+    if (!result.acknowledged) {
+        console.log("Could not add the message");
+        await client.close();
+        return null;
+    }
+    await client.close();
+    return result.insertedId;
 }

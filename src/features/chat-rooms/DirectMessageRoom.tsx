@@ -3,9 +3,11 @@ import { useParams } from "react-router-dom";
 import useFetchDirectMessages from "../../hooks/useFetchDirectMessages.js";
 import "./chat-styles.css";
 import ChatInputField from "./ChatInputField.js";
+import useStore from "../../data/store.js";
 
 const DirectMessage = () => {
     const { receiver } = useParams<{ receiver: string }>();
+    const { user } = useStore();
     // TODO: Lägg till Loading etc!
     const { messages } = useFetchDirectMessages(receiver!);
 
@@ -22,32 +24,29 @@ const DirectMessage = () => {
                 <p>No channel found.</p>
             )}{" "}
             <div className="messages-container">
-                { messages.map((msg, index) => (
+                {messages.map((msg, index) => (
+                    <div
+                        key={index}
+                        className={`message-section ${
+                            user?.username === msg.sender
+                                ? "own-message"
+                                : "other-message"
+                        }`}
+                    >
                         <div
-                            key={index}
-                            className={`message-section ${
-                                msg.sender === receiver
-                                    ? "own-message"
-                                    : "other-message"
-                            }`}
+                            className={
+                                user?.username === msg.sender
+                                    ? "user-message-container"
+                                    : "message-container"
+                            }
                         >
-                            <p
-                                className={
-                                    msg.sender === receiver
-                                        ? "user-message-container"
-                                        : "message-container"
-                                }
-                            >
-                                {msg.content}
-                                <div className="message-details">
-                                    <p>
-                                        {new Date(msg.sentAt).toLocaleString()}{" "}
-                                    </p>
-                                </div>
-                            </p>
+                            {msg.content}
+                            <div className="message-details">
+                                <p>{new Date(msg.sentAt).toLocaleString()} </p>
+                            </div>
                         </div>
-                    ))
-                }
+                    </div>
+                ))}
             </div>
             <ChatInputField />
         </div>

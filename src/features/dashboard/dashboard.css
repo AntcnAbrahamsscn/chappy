@@ -12,6 +12,7 @@
 
 .channel-list {
     margin-top: 2em;
+    cursor: pointer;
 }
 
 .list-container {
