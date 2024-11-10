@@ -29,7 +29,7 @@ async function connect(): Promise<[Collection<MessageInterface>, MongoClient]> {
     }
 }
 
-// Get all Messages
+// Get all messages
 async function getAllMessages(): Promise<WithId<MessageInterface>[]> {
     const [col, client]: [Collection<MessageInterface>, MongoClient] =
         await connect();
@@ -66,15 +66,7 @@ async function getConversation(
     return result;
 }
 
-export {
-    getAllMessages,
-    deleteMessage,
-    getChannelMessages,
-    getConversation,
-    addMessage,
-};
-
-// Get all Messages
+// Get all channel messages
 async function getChannelMessages(
     channelId: string
 ): Promise<WithId<MessageInterface>[]> {
@@ -101,3 +93,11 @@ async function addMessage(
     await client.close();
     return result.insertedId;
 }
+
+export {
+    getAllMessages,
+    deleteMessage,
+    getChannelMessages,
+    getConversation,
+    addMessage,
+};

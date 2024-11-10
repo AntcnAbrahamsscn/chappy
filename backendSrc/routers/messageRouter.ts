@@ -63,13 +63,13 @@ router.post("/", async (req: Request, res: Response) => {
         const wasInserted = await addMessage(newMessage);
 
         if (wasInserted) {
-            res.status(201);
+            res.status(201).json({ message: "Message posted successfully" });
         } else {
-            res.status(500);
+            res.status(500).json({ error: "Failed to post message" });
         }
     } catch (error) {
         console.error("Error inserting message:", error);
-        res.status(500);
+        res.status(500).json({ error: "Internal server error" });
     }
 });
 

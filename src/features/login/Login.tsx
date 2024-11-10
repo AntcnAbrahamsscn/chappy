@@ -5,8 +5,10 @@ import useStore from "../../data/store.js";
 // import Logout from "../logout/Logout.js";
 
 const Login = () => {
+    // TODO: Lägg till detta i zustand
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
     const {
         isLoggedIn,
         login /* restoreSession, */ /* user */,
@@ -15,11 +17,17 @@ const Login = () => {
     } = useStore();
     const navigate = useNavigate();
 
-    // TODO: Fixa så att man loggas in automatiskt om man kommer till login ifall det finns en JWT.
+    // TODO: Fixa så att man loggas in automatiskt om man kommer till login ifall det finns en JWT. Update: fixa guest udpdate
     useEffect(() => {
         logout();
     }, [logout]);
+
     const handleLogin = async () => {
+        if (!username || !password) {
+            setErrorMessage("Both username and password are required.");
+            return;
+        }
+
         const data = { username, password };
         const response = await fetch(`api/user/login`, {
             method: "POST",
@@ -33,10 +41,10 @@ const Login = () => {
             const { jwt, user } = await response.json();
 
             login(jwt, user);
-
             navigate("/dashboard");
         } else {
             console.error("Login failed");
+            setErrorMessage("Invalid username or password.");
         }
     };
 
@@ -66,6 +74,9 @@ const Login = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        {errorMessage && (
+                            <p className="error-message">{errorMessage}</p>
+                        )}{" "}
                     </div>
 
                     <div className="button-container">

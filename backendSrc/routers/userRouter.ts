@@ -9,6 +9,7 @@ import { ObjectId, WithId } from "mongodb";
 import { UserInterface } from "../models/UserInterface.js";
 import { Payload } from "../models/PayloadInterface.js";
 import jwt from "jsonwebtoken";
+import loginSchema from "../database/validation.js";
 
 const router: Router = express.Router();
 
@@ -46,6 +47,13 @@ router.delete("/:id", async (req: Request, res: Response) => {
 
 // Login route
 router.post("/login", async (req: Request, res: Response) => {
+    const { error } = loginSchema.validate(req.body);
+    if (error) {
+        console.error("Validation failed:", error.details);
+        res.status(400).send(error.details);
+        return;
+    }
+
     if (!process.env.SECRET) {
         res.sendStatus(500);
         return;
@@ -89,7 +97,6 @@ router.get("/protected", async (req: Request, res: Response) => {
         return;
     }
 
-    // Verify the token
     let payload: Payload;
     try {
         payload = jwt.verify(token, process.env.SECRET) as Payload;

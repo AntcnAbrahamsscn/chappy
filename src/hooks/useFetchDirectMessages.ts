@@ -1,35 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import useStore from "../data/store.js";
 import { MessageInterface } from "../models/MessageInterface.js";
 
-const useFetchDirectMessages = (receiver: string) => {
+const useFetchDirectMessages = (receiver: string, triggerRefresh: boolean) => {
     const { user } = useStore();
     const [messages, setMessages] = useState<MessageInterface[]>([]);
 
-    useEffect(() => {
-        const fetchDirectMessages = async () => {
-            if (!user || !receiver) {
-                return;
-            }
+    const fetchDirectMessages = useCallback(async () => {
+        if (!user || !receiver) {
+            return;
+        }
 
-            try {
-                const response = await fetch(
-                    `/api/message/direct/${user.username}/${receiver}`
+        try {
+            const response = await fetch(
+                `/api/message/direct/${user.username}/${receiver}`
+            );
+
+            if (response.ok) {
+                const data = await response.json();
+                setMessages(data.messages);
+            } else {
+                console.error(
+                    "Failed to fetch direct messages:",
+                    response.statusText
                 );
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setMessages(data.messages);
-                }
-            } catch (error) {
-                console.error("errror fetching messages:", error);
             }
-        };
-
-        fetchDirectMessages();
+        } catch (error) {
+            console.error("Error fetching messages:", error);
+        }
     }, [user, receiver]);
 
-    return { messages };
+    useEffect(() => {
+        fetchDirectMessages();
+    }, [fetchDirectMessages, triggerRefresh]);
+
+    return { messages, fetchDirectMessages };
 };
 
 export default useFetchDirectMessages;

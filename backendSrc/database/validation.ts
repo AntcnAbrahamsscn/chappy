@@ -1,9 +1,10 @@
 // import { WithId } from "mongodb";
+import Joi from "joi";
+
 // Här ska vi ha JOI!
-import { UserInterface } from "../models/UserInterface";
+const loginSchema = Joi.object({
+    username: Joi.string().min(3).max(30).required(),
+    password: Joi.string().min(6).max(128).required(),
+});
 
-function isValidUser(user: UserInterface): boolean {
-    return user === user;
-}
-
-export { isValidUser };
+export default loginSchema;

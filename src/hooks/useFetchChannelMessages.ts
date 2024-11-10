@@ -1,26 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { MessageInterface } from "../models/MessageInterface.js";
 
-const useFetchChannelMessages = (id: string) => {
+const useFetchChannelMessages = (id: string, triggerRefresh: boolean) => {
     const [messages, setMessages] = useState<MessageInterface[]>([]);
 
-    useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                const response = await fetch(`/api/message/${id}`);
-                if (response.ok) {
-                    const data: MessageInterface[] = await response.json();
-                    setMessages(data);
-                }
-            } catch (error) {
-                console.error("Error fetching messages:", error);
+    const fetchMessages = useCallback(async () => {
+        try {
+            const response = await fetch(`/api/message/${id}`);
+            if (response.ok) {
+                const data: MessageInterface[] = await response.json();
+                setMessages(data);
             }
-        };
-
-        fetchMessages();
+        } catch (error) {
+            console.error("Error fetching messages:", error);
+        }
     }, [id]);
 
-    return { messages };
+    useEffect(() => {
+        fetchMessages();
+    }, [fetchMessages, triggerRefresh]);
+    return { messages, fetchMessages };
 };
 
 export default useFetchChannelMessages;

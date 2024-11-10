@@ -13,11 +13,14 @@ import "./App.css";
 import Logout from "./features/logout/Logout.js";
 import Channel from "./features/chat-rooms/ChannelRoom.js";
 import DirectMessage from "./features/chat-rooms/DirectMessageRoom.js";
+import { useEffect } from "react";
 
 const App = () => {
-    const { isLoggedIn } = useStore();
+    const { isLoggedIn, initializeUser } = useStore();
 
-    // För att ändra bakgrund beroende på vart man är
+    useEffect(() => {
+        initializeUser();
+    }, [initializeUser]);
 
     return (
         <Router>

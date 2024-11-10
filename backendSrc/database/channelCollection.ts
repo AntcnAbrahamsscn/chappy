@@ -27,11 +27,16 @@ async function getAllChannels(): Promise<WithId<ChannelInterface>[]> {
 }
 
 // Get one channel
-async function getChannelName(channelId: string): Promise<WithId<ChannelInterface> | null> {
-    const [col, client]: [Collection<ChannelInterface>, MongoClient] = await connect();
-    const result: WithId<ChannelInterface> | null = await col.findOne({ _id: new ObjectId(channelId) });
+async function getChannelName(
+    channelId: string
+): Promise<WithId<ChannelInterface> | null> {
+    const [col, client]: [Collection<ChannelInterface>, MongoClient] =
+        await connect();
+    const result: WithId<ChannelInterface> | null = await col.findOne({
+        _id: new ObjectId(channelId),
+    });
     await client.close();
     return result;
 }
 
-export { getAllChannels /* getOpenChannels */, getChannelName };
+export { getAllChannels, getChannelName };

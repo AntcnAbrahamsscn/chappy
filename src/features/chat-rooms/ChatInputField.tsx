@@ -5,14 +5,21 @@ import { MessageInterface } from "../../models/MessageInterface";
 import "./chat-styles.css";
 import { CiLocationArrow1 } from "react-icons/ci";
 import useStore from "../../data/store.js";
+import messageSchema from "../../validation/messageSchema.js";
 
 const ChatInputField = () => {
     const [message, setMessage] = useState("");
     const { id, receiver } = useParams<{ id?: string; receiver?: string }>();
+    const { user, toggleMessageRefresh } = useStore();
 
-    const { user } = useStore();
+    // const { user } = useStore();
 
-    // API Request:
+    const validateMessage = (messageData: MessageInterface) => {
+        const { error } = messageSchema.validate(messageData);
+        return error;
+    };
+
+    // API Request: TODO: Lyft ut detta till egen hook-fil
     async function postMessage() {
         const messageData: MessageInterface = {
             sender: user ? user.username : "Guest",
@@ -22,8 +29,14 @@ const ChatInputField = () => {
             sentAt: new Date(),
         };
 
+        const validationError = validateMessage(messageData);
+        if (validationError) {
+            console.error("Validation error:", validationError.details);
+            return; // Do not proceed if validation fails
+        }
+        setMessage("");
+
         try {
-            // Log the data before sending
             console.log("Posting message data:", messageData);
 
             const response = await fetch("/api/message/", {
@@ -32,12 +45,16 @@ const ChatInputField = () => {
                 body: JSON.stringify(messageData),
             });
 
-            const data = await response.json();
-            console.log("Message posted successfully:", data);
-
-            setMessage("");
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Message posted successfully:", data);
+                toggleMessageRefresh();
+            } else {
+                const error = await response.json();
+                console.error("Error posting message:", error);
+            }
         } catch (error) {
-            console.log("This is an errro");
+            console.error("Error posting message:", error);
         }
     }
 

@@ -14,6 +14,7 @@ const Dashboard = () => {
     const { user } = useStore();
     const navigate = useNavigate();
 
+    // TODO: Lyfta ut denna i egen fil
     useEffect(() => {
         const fetchChannels = async () => {
             const token = localStorage.getItem("JWT-TOKEN");

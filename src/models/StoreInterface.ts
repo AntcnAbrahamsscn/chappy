@@ -7,4 +7,7 @@ export interface StoreInterface {
     login: (token: string, user: UserInterface) => void;
     loginAsGuest: () => void;
     logout: () => void;
+    messageRefreshTrigger: boolean;
+    toggleMessageRefresh: () => void;
+    initializeUser: () => void;
 }

@@ -4,15 +4,38 @@ import useFetchChannel from "../../hooks/useFetchChannel.js";
 import useStore from "../../data/store.js";
 import "./chat-styles.css";
 import ChatInputField from "./ChatInputField.js";
+import { useEffect, useRef } from "react";
+// import { useState } from "react";
 
 const Channel = () => {
     const { id } = useParams<{ id: string }>();
-    const { user } = useStore();
+    // const { user } = useStore();
     // TODO: Lägg till fungerande loading etc.
-    const { messages } = useFetchChannelMessages(id!);
-
     // TODO: Lägg till fungerande loading etc.
     const { channel } = useFetchChannel(id!);
+    // För att ladda om när nytt meddelande är skrivet
+    // const [refreshToggle, setRefreshToggle] = useState(false);
+    // const refreshMessages = () => setRefreshToggle(!refreshToggle);
+    const { user, messageRefreshTrigger } = useStore();
+    const { messages, fetchMessages } = useFetchChannelMessages(
+        id!,
+        messageRefreshTrigger
+    );
+
+    const scrollableRef = useRef<HTMLDivElement>(null);
+
+    // const { messages, fetchMessages } = useFetchChannelMessages(id!);
+
+    useEffect(() => {
+        fetchMessages();
+    }, [fetchMessages, messageRefreshTrigger]);
+
+    useEffect(() => {
+        if (scrollableRef.current) {
+            scrollableRef.current.scrollTop =
+                scrollableRef.current.scrollHeight;
+        }
+    }, [messages]);
 
     return (
         <div className="channel-container">
@@ -24,7 +47,7 @@ const Channel = () => {
             ) : (
                 <p>No channel found.</p>
             )}
-            <div className="messages-container">
+            <div className="messages-container" ref={scrollableRef}>
                 {messages.map((msg, index) => (
                     <div
                         key={index}

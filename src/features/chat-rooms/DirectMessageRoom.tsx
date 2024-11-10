@@ -2,14 +2,22 @@
 import { useParams } from "react-router-dom";
 import useFetchDirectMessages from "../../hooks/useFetchDirectMessages.js";
 import "./chat-styles.css";
-import ChatInputField from "./ChatInputField.js";
+// import ChatInputField from "./ChatInputField.js";
 import useStore from "../../data/store.js";
+import { useEffect } from "react";
+import ChatInputField from "./ChatInputField.js";
 
 const DirectMessage = () => {
     const { receiver } = useParams<{ receiver: string }>();
-    const { user } = useStore();
-    // TODO: Lägg till Loading etc!
-    const { messages } = useFetchDirectMessages(receiver!);
+    const { user, messageRefreshTrigger } = useStore();
+    const { messages, fetchDirectMessages } = useFetchDirectMessages(
+        receiver!,
+        messageRefreshTrigger
+    );
+
+    useEffect(() => {
+        fetchDirectMessages();
+    }, [fetchDirectMessages, messageRefreshTrigger]);
 
     return (
         <div className="channel-container">
