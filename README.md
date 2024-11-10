@@ -58,14 +58,14 @@ The project uses JWT for authentication and is structured as a RESTful API.
 
 ### Message
 
-| Field      | Type     |
-| ---------- | -------- | ---- |
-| `_id`      | ObjectId |
-| `sender`   | String   |
-| `content`  | String   |
-| `channel`  | String   | null |
-| `directTo` | String   | null |
-| `sentAt`   | Date     |
+| Field      | Type         |
+| ---------- | ------------ |
+| `_id`      | ObjectId     |
+| `sender`   | String       |
+| `content`  | String       |
+| `channel`  | String/ null |
+| `directTo` | String/ null |
+| `sentAt`   | Date         |
 
 ### Channel
 
@@ -77,7 +77,7 @@ The project uses JWT for authentication and is structured as a RESTful API.
 
 ---
 
-## 🔗 API Endpoints
+## API Endpoints
 
 ### Channels
 
@@ -103,7 +103,7 @@ The project uses JWT for authentication and is structured as a RESTful API.
 | GET    | `/api/messages/direct/:user1/:user2` | Fetch a private conversation between two users.         |
 | POST   | `/api/messages`                      | Send a new message to a channel or as a direct message. |
 
-## ✨ Features
+## Features
 
 -   **Guest Access**: Allows guests to view users and channels and participate in open channels.
 -   **User Authentication**: Enables users to log in for access to private channels and direct messages.
@@ -114,7 +114,7 @@ The project uses JWT for authentication and is structured as a RESTful API.
 
 ---
 
-## 🔄 To be continued.
+## To be continued..
 
 To optimize the code, the application will be updated so that both channels and direct messages render within a unified chat room, reducing redundant code. Additionally, new features will be added to enhance user management and channel administration, including the ability to:
 
