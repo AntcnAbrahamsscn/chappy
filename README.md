@@ -16,8 +16,8 @@ Chappy is a chat application that enables users to communicate through channels 
     -   [Channels](#channels)
     -   [Users](#users)
     -   [Messages](#messages)
--   [Setup](#setup)
 -   [Features](#features)
+-   [To be continued](#Tobecontinued)
 
 ---
 
